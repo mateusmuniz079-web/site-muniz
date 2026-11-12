@@ -6,14 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criação de Sites Profissionais | Muniz Métodos</title>
   
-  <!-- Fontes Oficiais do Galaxy Design System -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
+  <!-- Fontes Geist hospedadas no próprio site (licença SIL OFL) -->
+  <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/chain-links-poster.webp" as="image" media="(min-width: 769px)">
+  <link rel="preload" href="assets/chain-links-poster-mobile.webp" as="image" media="(max-width: 768px)">
 
   <style>
+    @font-face {
+      font-family: 'Geist';
+      src: url('assets/fonts/geist.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Geist Mono';
+      src: url('assets/fonts/geist-mono.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
     /* ==========================================================================
        GALAXY DESIGN SYSTEM — TOKENS OFICIAIS RIGOROSOS
        Baseado em Template.html (Lumen/Galaxy Zero-Trust UI)
@@ -357,8 +370,8 @@
       object-fit: contain;
       position: relative;
       z-index: 1;
-      animation: logoPulseGlow 3s ease-in-out infinite;
-      transition: all var(--transition-fast);
+      filter: drop-shadow(0 0 8px rgba(107, 47, 255, 0.85)) drop-shadow(0 0 18px rgba(72, 0, 255, 0.55));
+      transition: transform var(--transition-fast);
       display: block;
     }
 
@@ -2671,8 +2684,8 @@
     /* Primeira dobra entra em sequência — só movimento e foco,
        sem esconder o conteúdo (opacidade sempre 1) */
     @keyframes heroSettle {
-      from { transform: translateY(16px); filter: blur(5px); }
-      to   { transform: none; filter: blur(0); }
+      from { transform: translateY(16px); }
+      to   { transform: none; }
     }
     .hero-left-col > *,
     .hero-right-col,
@@ -2693,15 +2706,12 @@
     .reveal {
       opacity: 0;
       transform: translateY(28px);
-      filter: blur(4px);
       transition:
         opacity 0.75s ease,
-        transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1),
-        filter 0.75s ease;
-      will-change: opacity, transform;
+        transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     .reveal.above { transform: translateY(-28px); }
-    .reveal.in { opacity: 1; transform: none; filter: none; }
+    .reveal.in { opacity: 1; transform: none; }
 
     /* Itens de grades entram em cascata */
     .services-grid .reveal:nth-child(3n+2),
@@ -2759,6 +2769,14 @@
       .microcopy-badge { text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.8); }
       .hero-subtitle { color: #E5E7EB; }
     }
+
+    /* Pôster (1º quadro do vídeo) aparece na hora; o vídeo entra por cima quando carregar */
+    #splineSceneTransform {
+      background: #000 url('assets/chain-links-poster.webp') center / cover no-repeat;
+    }
+    @media (max-width: 768px) {
+      #splineSceneTransform { background-image: url('assets/chain-links-poster-mobile.webp'); }
+    }
   </style>
 </head>
 
@@ -2771,22 +2789,12 @@
   <div class="spline-fixed-viewport" id="splineFixedViewport">
     <div class="spline-scene-transform" id="splineSceneTransform">
       <!-- VÍDEO CONTROLADO PELO SCROLL
-           Computador: assets/chain-links.mp4 · Celular: assets/chain-links-mobile.mp4 (versão vertical, mais leve).
-           Enquanto o arquivo não existir, o iframe do Spline abaixo é usado como fallback. -->
+           Vídeo em WebM (mais leve) ou MP4, versão horizontal no computador e vertical no celular. Enquanto carrega, aparece o pôster (1º quadro).
+           Se nenhum vídeo abrir, fica o pôster (1º quadro) como fundo estático. -->
       <video class="bg-scrub-video" id="bgScrubVideo" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1"
-             data-src-desktop="assets/chain-links.mp4"
-             data-src-mobile="assets/chain-links-mobile.mp4"></video>
-      <!-- Reserva: só é carregado se o vídeo não abrir (economiza vários MB) -->
-      <iframe 
-        data-src="https://my.spline.design/unchained-d3hHCgdWho7a8ATGzKtB11TU" 
-        loading="lazy" 
-        frameborder="0" 
-        width="100%" 
-        height="100%" 
-        id="aura-spline"
-        title="Spline 3D Chain Links Background"
-        allow="autoplay"
-      ></iframe>
+             data-mp4-desktop="assets/chain-links.mp4" data-webm-desktop="assets/chain-links.webm"
+             data-mp4-mobile="assets/chain-links-mobile.mp4" data-webm-mobile="assets/chain-links-mobile.webm"></video>
+
     </div>
     <div class="spline-vignette-overlay"></div>
     <div class="spline-accent-glow"></div>
@@ -3170,7 +3178,7 @@
                     </div>
                     <div class="cs-shot-wrap">
                       <img class="cs-shot" src="assets/portfolio/ks-otica-1200.webp"
-                           srcset="assets/portfolio/ks-otica-640.webp 640w, assets/portfolio/ks-otica-1200.webp 1200w"
+                           srcset="assets/portfolio/ks-otica-640.webp 640w, assets/portfolio/ks-otica-800.webp 800w, assets/portfolio/ks-otica-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
                            width="1200" height="788" loading="eager" decoding="async" draggable="false"
                            alt="Página inicial do site KS Ótica, sistema para óticas">
@@ -3184,7 +3192,7 @@
                     </div>
                     <div class="cs-shot-wrap">
                       <img class="cs-shot" src="assets/portfolio/torque-1200.webp"
-                           srcset="assets/portfolio/torque-640.webp 640w, assets/portfolio/torque-1200.webp 1200w"
+                           srcset="assets/portfolio/torque-640.webp 640w, assets/portfolio/torque-800.webp 800w, assets/portfolio/torque-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
                            width="1200" height="788" loading="lazy" decoding="async" draggable="false"
                            alt="Página inicial do site Torque, oficina mecânica">
@@ -3198,7 +3206,7 @@
                     </div>
                     <div class="cs-shot-wrap">
                       <img class="cs-shot" src="assets/portfolio/echo-1200.webp"
-                           srcset="assets/portfolio/echo-640.webp 640w, assets/portfolio/echo-1200.webp 1200w"
+                           srcset="assets/portfolio/echo-640.webp 640w, assets/portfolio/echo-800.webp 800w, assets/portfolio/echo-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
                            width="1200" height="788" loading="lazy" decoding="async" draggable="false"
                            alt="Página inicial do site Echo English, curso de inglês">
@@ -3212,7 +3220,7 @@
                     </div>
                     <div class="cs-shot-wrap">
                       <img class="cs-shot" src="assets/portfolio/vertice-1200.webp"
-                           srcset="assets/portfolio/vertice-640.webp 640w, assets/portfolio/vertice-1200.webp 1200w"
+                           srcset="assets/portfolio/vertice-640.webp 640w, assets/portfolio/vertice-800.webp 800w, assets/portfolio/vertice-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
                            width="1200" height="788" loading="lazy" decoding="async" draggable="false"
                            alt="Página inicial do site Vértice, arquitetura e interiores">
@@ -3226,7 +3234,7 @@
                     </div>
                     <div class="cs-shot-wrap">
                       <img class="cs-shot" src="assets/portfolio/pulso-1200.webp"
-                           srcset="assets/portfolio/pulso-640.webp 640w, assets/portfolio/pulso-1200.webp 1200w"
+                           srcset="assets/portfolio/pulso-640.webp 640w, assets/portfolio/pulso-800.webp 800w, assets/portfolio/pulso-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
                            width="1200" height="788" loading="lazy" decoding="async" draggable="false"
                            alt="Página inicial do site Pulso, academia e clube de treino">
@@ -3493,7 +3501,7 @@
             <article class="project-card reveal">
               <div class="project-thumb project-shot">
                 <img src="assets/portfolio/echo-640.webp"
-                     srcset="assets/portfolio/echo-640.webp 640w, assets/portfolio/echo-1200.webp 1200w"
+                     srcset="assets/portfolio/echo-640.webp 640w, assets/portfolio/echo-800.webp 800w, assets/portfolio/echo-1200.webp 1200w"
                      sizes="(max-width: 768px) 92vw, (max-width: 1024px) 46vw, 370px"
                      width="1200" height="788" loading="lazy" decoding="async"
                      alt="Página inicial do site Echo English, escola e curso de inglês">
@@ -3511,7 +3519,7 @@
             <article class="project-card reveal">
               <div class="project-thumb project-shot">
                 <img src="assets/portfolio/altano-640.webp"
-                     srcset="assets/portfolio/altano-640.webp 640w, assets/portfolio/altano-1200.webp 1200w"
+                     srcset="assets/portfolio/altano-640.webp 640w, assets/portfolio/altano-800.webp 800w, assets/portfolio/altano-1200.webp 1200w"
                      sizes="(max-width: 768px) 92vw, (max-width: 1024px) 46vw, 370px"
                      width="1200" height="788" loading="lazy" decoding="async"
                      alt="Página inicial do site Altano, imobiliárias e corretores">
@@ -3529,7 +3537,7 @@
             <article class="project-card reveal">
               <div class="project-thumb project-shot">
                 <img src="assets/portfolio/serena-640.webp"
-                     srcset="assets/portfolio/serena-640.webp 640w, assets/portfolio/serena-1200.webp 1200w"
+                     srcset="assets/portfolio/serena-640.webp 640w, assets/portfolio/serena-800.webp 800w, assets/portfolio/serena-1200.webp 1200w"
                      sizes="(max-width: 768px) 92vw, (max-width: 1024px) 46vw, 370px"
                      width="1200" height="788" loading="lazy" decoding="async"
                      alt="Página inicial do site Serena, clínica de estética e bem-estar">
@@ -3789,9 +3797,13 @@
 
       const floatBtn = document.getElementById('whatsappFloat');
       const hero = document.getElementById('hero');
+      let heroH = hero ? hero.offsetHeight : 0;
+      if (hero && 'ResizeObserver' in window) {
+        new ResizeObserver((en) => { heroH = en[0].contentRect.height; }).observe(hero);
+      }
       function toggleFloat() {
         if (!floatBtn || !hero) return;
-        floatBtn.classList.toggle('visible', window.scrollY > hero.offsetHeight * 0.6);
+        floatBtn.classList.toggle('visible', window.scrollY > heroH * 0.6);
       }
       window.addEventListener('scroll', toggleFloat, { passive: true });
       toggleFloat();
@@ -3861,8 +3873,8 @@
         track.style.transition = animate ? TRANSITION : 'none';
         track.style.transform = 'translateX(' + (-pos * 100) + '%)';
         if (!animate) {
-          void track.offsetWidth;          // aplica sem animar
-          track.style.transition = TRANSITION;
+          // reativa a transição no próximo quadro (sem forçar layout)
+          requestAnimationFrame(() => requestAnimationFrame(() => { track.style.transition = TRANSITION; }));
         }
       }
 
@@ -3881,9 +3893,9 @@
           d.classList.remove('active');
           d.classList.toggle('done', i < index);
         });
-        void dotsWrap.offsetWidth; // reinicia a animação da barra
-        if (!reduced) dots[index].classList.add('active');
-        else dots[index].classList.add('done');
+        // reinicia a animação da barra no próximo quadro (sem forçar layout)
+        const cur = dots[index];
+        requestAnimationFrame(() => cur.classList.add(reduced ? 'done' : 'active'));
         seg.textContent = slides[index].dataset.seg;
         desc.textContent = slides[index].dataset.desc;
         counter.textContent = String(index + 1).padStart(2, '0');
@@ -4008,13 +4020,12 @@
     // BACKGROUND DA PRIMEIRA DOBRA — VÍDEO FIXO QUE AVANÇA E RECUA COM O SCROLL
     // - Rolar para baixo: o vídeo avança quadro a quadro
     // - Rolar para cima: o vídeo volta
-    // - Sem o arquivo de vídeo: usa o iframe do Spline com zoom/paralaxe
+    // - Sem vídeo: fica o pôster estático, com zoom/paralaxe
     // ==========================================================================
     (function initScrollScrubBackground() {
       const viewport = document.getElementById('splineFixedViewport');
       const wrapper = document.getElementById('splineSceneTransform');
       const video = document.getElementById('bgScrubVideo');
-      const iframe = document.getElementById('aura-spline');
       const hero = document.getElementById('hero');
       if (!viewport || !wrapper) return;
 
@@ -4030,23 +4041,27 @@
       let currentTime = 0;
       let running = false;
 
-      const heroHeight = () => (hero ? hero.offsetHeight : window.innerHeight);
+      let cachedHeroH = hero ? hero.offsetHeight : window.innerHeight;
+      if (hero && 'ResizeObserver' in window) {
+        new ResizeObserver((en) => { cachedHeroH = en[0].contentRect.height || window.innerHeight; }).observe(hero);
+      }
+      const heroHeight = () => cachedHeroH;
       const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
 
       // ---------- Preparação do vídeo ----------
-      // Carrega o Spline (pesado) apenas se o vídeo falhar
-      let splineLoaded = false;
-      const loadSplineFallback = () => {
-        if (splineLoaded || videoReady || !iframe || !iframe.dataset.src) return;
-        splineLoaded = true;
-        iframe.src = iframe.dataset.src;
-      };
-
       if (video) {
-        // Celular recebe a versão vertical e mais leve; computador, a horizontal
+        // Celular recebe a versão vertical; computador, a horizontal.
+        // WebM (mais leve) quando o navegador suporta VP9; senão, MP4.
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        const chosen = (isMobile ? video.dataset.srcMobile : video.dataset.srcDesktop) || video.dataset.srcDesktop;
-        video.addEventListener('error', loadSplineFallback);
+        const d = video.dataset;
+        const canWebm = video.canPlayType('video/webm; codecs="vp9"') === 'probably';
+        const chosen = isMobile ? (canWebm ? d.webmMobile : d.mp4Mobile) : (canWebm ? d.webmDesktop : d.mp4Desktop);
+        // se o formato escolhido falhar, tenta o outro; se tudo falhar, fica o pôster
+        const other = isMobile ? (canWebm ? d.mp4Mobile : d.webmMobile) : (canWebm ? d.mp4Desktop : d.webmDesktop);
+        let triedOther = false;
+        video.addEventListener('error', () => {
+          if (!triedOther && other) { triedOther = true; video.src = other; video.load(); }
+        });
         video.src = chosen;
         video.load();
         video.pause();
@@ -4094,7 +4109,7 @@
           wrapper.style.transform = `scale(${scale.toFixed(4)})`;
           wrapper.style.filter = '';
         } else {
-          // Fallback (iframe do Spline): zoom, paralaxe e leve rotação
+          // Enquanto o vídeo não carrega: zoom e paralaxe sobre o pôster
           const p = clamp(currentScroll / h, 0, 1.5);
           wrapper.style.transform = `translate3d(0, ${(p * -35).toFixed(2)}px, 0) scale(${(1 + p * 0.48).toFixed(3)}) rotate(${(p * 3.5).toFixed(2)}deg)`;
           wrapper.style.filter = `brightness(${(1 - p * 0.18).toFixed(2)})`;
@@ -4128,8 +4143,6 @@
         targetScroll = window.scrollY || 0;
         kick();
       }
-
-      if (!video) loadSplineFallback();
 
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll, { passive: true });
