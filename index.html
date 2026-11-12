@@ -2756,13 +2756,15 @@
   <div class="spline-fixed-viewport" id="splineFixedViewport">
     <div class="spline-scene-transform" id="splineSceneTransform">
       <!-- VÍDEO CONTROLADO PELO SCROLL
-           A animação fica em assets/chain-links.mp4.
+           Computador: assets/chain-links.mp4 · Celular: assets/chain-links-mobile.mp4 (versão vertical, mais leve).
            Enquanto o arquivo não existir, o iframe do Spline abaixo é usado como fallback. -->
-      <video class="bg-scrub-video" id="bgScrubVideo" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1">
-        <source src="assets/chain-links.mp4" type="video/mp4">
-      </video>
+      <video class="bg-scrub-video" id="bgScrubVideo" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1"
+             data-src-desktop="assets/chain-links.mp4"
+             data-src-mobile="assets/chain-links-mobile.mp4"></video>
+      <!-- Reserva: só é carregado se o vídeo não abrir (economiza vários MB) -->
       <iframe 
-        src="https://my.spline.design/unchained-d3hHCgdWho7a8ATGzKtB11TU" 
+        data-src="https://my.spline.design/unchained-d3hHCgdWho7a8ATGzKtB11TU" 
+        loading="lazy" 
         frameborder="0" 
         width="100%" 
         height="100%" 
@@ -3084,7 +3086,7 @@
 
       <!-- ==========================================================================
            SEGUNDA DOBRA — PROBLEMA & SOLUÇÃO (texto à esquerda, carrossel à direita)
-           Os prints do carrossel ficam em assets/portfolio/ (versões 1440 e 800 px).
+           Os prints do carrossel ficam em assets/portfolio/ (versões 1200 e 640 px).
            ========================================================================== -->
       <section class="content-section problem-section" id="problema">
         <div class="section-inner">
@@ -3152,10 +3154,10 @@
                       <span class="cs-flag">SaaS</span>
                     </div>
                     <div class="cs-shot-wrap">
-                      <img class="cs-shot" src="assets/portfolio/ks-otica-1440.webp"
-                           srcset="assets/portfolio/ks-otica-800.webp 800w, assets/portfolio/ks-otica-1440.webp 1440w"
+                      <img class="cs-shot" src="assets/portfolio/ks-otica-1200.webp"
+                           srcset="assets/portfolio/ks-otica-640.webp 640w, assets/portfolio/ks-otica-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
-                           width="1440" height="945" loading="eager" decoding="async" draggable="false"
+                           width="1200" height="788" loading="eager" decoding="async" draggable="false"
                            alt="Página inicial do site KS Ótica, sistema para óticas">
                     </div>
                   </div>
@@ -3166,10 +3168,10 @@
                       <span class="cs-flag">Local</span>
                     </div>
                     <div class="cs-shot-wrap">
-                      <img class="cs-shot" src="assets/portfolio/torque-1440.webp"
-                           srcset="assets/portfolio/torque-800.webp 800w, assets/portfolio/torque-1440.webp 1440w"
+                      <img class="cs-shot" src="assets/portfolio/torque-1200.webp"
+                           srcset="assets/portfolio/torque-640.webp 640w, assets/portfolio/torque-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
-                           width="1440" height="945" loading="lazy" decoding="async" draggable="false"
+                           width="1200" height="788" loading="lazy" decoding="async" draggable="false"
                            alt="Página inicial do site Torque, oficina mecânica">
                     </div>
                   </div>
@@ -3180,10 +3182,10 @@
                       <span class="cs-flag">Interativo</span>
                     </div>
                     <div class="cs-shot-wrap">
-                      <img class="cs-shot" src="assets/portfolio/echo-1440.webp"
-                           srcset="assets/portfolio/echo-800.webp 800w, assets/portfolio/echo-1440.webp 1440w"
+                      <img class="cs-shot" src="assets/portfolio/echo-1200.webp"
+                           srcset="assets/portfolio/echo-640.webp 640w, assets/portfolio/echo-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
-                           width="1440" height="945" loading="lazy" decoding="async" draggable="false"
+                           width="1200" height="788" loading="lazy" decoding="async" draggable="false"
                            alt="Página inicial do site Echo English, curso de inglês">
                     </div>
                   </div>
@@ -3194,10 +3196,10 @@
                       <span class="cs-flag">Portfólio</span>
                     </div>
                     <div class="cs-shot-wrap">
-                      <img class="cs-shot" src="assets/portfolio/vertice-1440.webp"
-                           srcset="assets/portfolio/vertice-800.webp 800w, assets/portfolio/vertice-1440.webp 1440w"
+                      <img class="cs-shot" src="assets/portfolio/vertice-1200.webp"
+                           srcset="assets/portfolio/vertice-640.webp 640w, assets/portfolio/vertice-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
-                           width="1440" height="945" loading="lazy" decoding="async" draggable="false"
+                           width="1200" height="788" loading="lazy" decoding="async" draggable="false"
                            alt="Página inicial do site Vértice, arquitetura e interiores">
                     </div>
                   </div>
@@ -3208,10 +3210,10 @@
                       <span class="cs-flag">Mobile-first</span>
                     </div>
                     <div class="cs-shot-wrap">
-                      <img class="cs-shot" src="assets/portfolio/pulso-1440.webp"
-                           srcset="assets/portfolio/pulso-800.webp 800w, assets/portfolio/pulso-1440.webp 1440w"
+                      <img class="cs-shot" src="assets/portfolio/pulso-1200.webp"
+                           srcset="assets/portfolio/pulso-640.webp 640w, assets/portfolio/pulso-1200.webp 1200w"
                            sizes="(max-width: 1024px) 92vw, 620px"
-                           width="1440" height="945" loading="lazy" decoding="async" draggable="false"
+                           width="1200" height="788" loading="lazy" decoding="async" draggable="false"
                            alt="Página inicial do site Pulso, academia e clube de treino">
                     </div>
                   </div>
@@ -3457,7 +3459,7 @@
 
       <!-- ==========================================================================
            04 — PORTFÓLIO
-           Prints em assets/portfolio/ (versões 1440 e 800 px).
+           Prints em assets/portfolio/ (versões 1200 e 640 px).
            ========================================================================== -->
       <section class="content-section alt" id="portfolio">
         <div class="section-inner">
@@ -3475,10 +3477,10 @@
           <div class="portfolio-grid">
             <article class="project-card reveal">
               <div class="project-thumb project-shot">
-                <img src="assets/portfolio/echo-800.webp"
-                     srcset="assets/portfolio/echo-800.webp 800w, assets/portfolio/echo-1440.webp 1440w"
+                <img src="assets/portfolio/echo-640.webp"
+                     srcset="assets/portfolio/echo-640.webp 640w, assets/portfolio/echo-1200.webp 1200w"
                      sizes="(max-width: 768px) 92vw, (max-width: 1024px) 46vw, 370px"
-                     width="1440" height="945" loading="lazy" decoding="async"
+                     width="1200" height="788" loading="lazy" decoding="async"
                      alt="Página inicial do site Echo English, escola e curso de inglês">
                 <span class="project-badge">Echo English</span>
               </div>
@@ -3493,10 +3495,10 @@
 
             <article class="project-card reveal">
               <div class="project-thumb project-shot">
-                <img src="assets/portfolio/altano-800.webp"
-                     srcset="assets/portfolio/altano-800.webp 800w, assets/portfolio/altano-1440.webp 1440w"
+                <img src="assets/portfolio/altano-640.webp"
+                     srcset="assets/portfolio/altano-640.webp 640w, assets/portfolio/altano-1200.webp 1200w"
                      sizes="(max-width: 768px) 92vw, (max-width: 1024px) 46vw, 370px"
-                     width="1440" height="945" loading="lazy" decoding="async"
+                     width="1200" height="788" loading="lazy" decoding="async"
                      alt="Página inicial do site Altano, imobiliárias e corretores">
                 <span class="project-badge">Altano</span>
               </div>
@@ -3511,10 +3513,10 @@
 
             <article class="project-card reveal">
               <div class="project-thumb project-shot">
-                <img src="assets/portfolio/serena-800.webp"
-                     srcset="assets/portfolio/serena-800.webp 800w, assets/portfolio/serena-1440.webp 1440w"
+                <img src="assets/portfolio/serena-640.webp"
+                     srcset="assets/portfolio/serena-640.webp 640w, assets/portfolio/serena-1200.webp 1200w"
                      sizes="(max-width: 768px) 92vw, (max-width: 1024px) 46vw, 370px"
-                     width="1440" height="945" loading="lazy" decoding="async"
+                     width="1200" height="788" loading="lazy" decoding="async"
                      alt="Página inicial do site Serena, clínica de estética e bem-estar">
                 <span class="project-badge">Serena</span>
               </div>
@@ -4017,15 +4019,27 @@
       const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
 
       // ---------- Preparação do vídeo ----------
+      // Carrega o Spline (pesado) apenas se o vídeo falhar
+      let splineLoaded = false;
+      const loadSplineFallback = () => {
+        if (splineLoaded || videoReady || !iframe || !iframe.dataset.src) return;
+        splineLoaded = true;
+        iframe.src = iframe.dataset.src;
+      };
+
       if (video) {
+        // Celular recebe a versão vertical e mais leve; computador, a horizontal
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        const chosen = (isMobile ? video.dataset.srcMobile : video.dataset.srcDesktop) || video.dataset.srcDesktop;
+        video.addEventListener('error', loadSplineFallback);
+        video.src = chosen;
+        video.load();
         video.pause();
         const onReady = () => {
           if (videoReady || !video.duration || !isFinite(video.duration)) return;
           duration = video.duration;
           videoReady = true;
           viewport.classList.add('video-ready');
-          // Libera o iframe do Spline para não pesar a página
-          if (iframe) iframe.removeAttribute('src');
           kick();
         };
         video.addEventListener('loadedmetadata', onReady);
@@ -4099,6 +4113,8 @@
         targetScroll = window.scrollY || 0;
         kick();
       }
+
+      if (!video) loadSplineFallback();
 
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll, { passive: true });
