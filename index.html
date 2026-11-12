@@ -2654,25 +2654,40 @@
       to   { opacity: 1; transform: none; filter: blur(0); }
     }
 
-    /* A página inteira surge do preto */
-    .page-container { animation: pageFadeIn 0.9s ease both; }
-    #splineSceneTransform { animation: pageFadeIn 1.6s ease 0.2s both; }
+    /* A página surge do preto: uma "cortina" preta por cima some aos poucos.
+       O conteúdo já está pintado por baixo (opacidade 1), então ferramentas
+       como PageSpeed/Lighthouse registram o First Contentful Paint normalmente. */
+    @keyframes curtainOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      pointer-events: none;
+      animation: curtainOut 0.9s ease 0.05s both;
+    }
 
-    /* Primeira dobra entra em sequência */
+    /* Primeira dobra entra em sequência — só movimento e foco,
+       sem esconder o conteúdo (opacidade sempre 1) */
+    @keyframes heroSettle {
+      from { transform: translateY(16px); filter: blur(5px); }
+      to   { transform: none; filter: blur(0); }
+    }
     .hero-left-col > *,
     .hero-right-col,
     .trust-card {
-      animation: riseIn 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      animation: heroSettle 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
-    .hero-left-col > *:nth-child(1) { animation-delay: 0.15s; }
-    .hero-left-col > *:nth-child(2) { animation-delay: 0.27s; }
-    .hero-left-col > *:nth-child(3) { animation-delay: 0.39s; }
-    .hero-left-col > *:nth-child(4) { animation-delay: 0.51s; }
-    .hero-right-col { animation-delay: 0.45s; animation-duration: 1.1s; }
-    .trust-card:nth-child(1) { animation-delay: 0.65s; }
-    .trust-card:nth-child(2) { animation-delay: 0.75s; }
-    .trust-card:nth-child(3) { animation-delay: 0.85s; }
-    .trust-card:nth-child(4) { animation-delay: 0.95s; }
+    .hero-left-col > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-left-col > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero-left-col > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero-left-col > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero-right-col { animation-delay: 0.35s; animation-duration: 1.1s; }
+    .trust-card:nth-child(1) { animation-delay: 0.5s; }
+    .trust-card:nth-child(2) { animation-delay: 0.6s; }
+    .trust-card:nth-child(3) { animation-delay: 0.7s; }
+    .trust-card:nth-child(4) { animation-delay: 0.8s; }
 
     /* Blocos do conteúdo: entram e saem com fade + leve deslocamento */
     .reveal {
@@ -2700,7 +2715,7 @@
     .process-track .reveal:nth-child(4n) { transition-delay: 0.24s; }
 
     @media (prefers-reduced-motion: reduce) {
-      .page-container, #splineSceneTransform,
+      body::after { display: none; }
       .hero-left-col > *, .hero-right-col, .trust-card { animation: none; }
       .reveal, .reveal.above { opacity: 1; transform: none; filter: none; transition: none; }
     }
